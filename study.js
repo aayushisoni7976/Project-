@@ -1,40 +1,45 @@
-let totalHours = 0;
-let streak = 0;
-let sessions = [];
-let history = [];
+// 1. Data load karo ya khali arrays banao
+let sessions = JSON.parse(localStorage.getItem("sessions")) || [];
+let history = JSON.parse(localStorage.getItem("history")) || [];
+let streak = parseInt(localStorage.getItem("streak")) || 0;
+let totalHours = sessions.reduce((sum, s) => sum + s.hours, 0);
 let historyVisible = false;
 
- 
+// Page khulte hi sab kuch load ho jaye
+window.onload = function() {
+    updateDisplay();
+};
 
 function addSession() {
-    // 1. User ka input lo
     let subject = document.getElementById("subject").value;
-    let hours = parseFloat(document.getElementById("hours").value);
+    let hoursInput = document.getElementById("hours").value;
+    let hours = parseFloat(hoursInput);
     
-    // 2. Total update karo
+    if (!hours || hours <= 0) {
+        alert("Please enter valid hours!");
+        return;
+    }
+    
     totalHours = totalHours + hours;
     
-    // 3. Display update karo
-    document.getElementById("totalHours").innerHTML = totalHours;
-    
-    // 4. Session list mein add karo
     let session = {
         subject: subject,
         hours: hours,
         time: new Date().toLocaleTimeString()
     };
+    
     sessions.push(session);
     
-    // 5. List update karo (HTML mein dikhao)
-    updateSessionList();
+    // 2. Browser memory mein save karo
+    saveToLocal();
+    updateDisplay();
     
-    // 6. Input clear karo
     document.getElementById("hours").value = "";
 }
 
 function updateSessionList() {
     let listDiv = document.getElementById("sessionList");
-    listDiv.innerHTML = ""; // Clear existing
+    listDiv.innerHTML = ""; 
     
     sessions.forEach(session => {
         let item = document.createElement("div");
@@ -48,33 +53,21 @@ function updateSessionList() {
     });
 }
 
-
-
 function resetDay() {
-   totalHours = 0
-   sessions = []
-
-   updateDisplay()
-    
+    if(confirm("Are you sure you want to reset today's data?")) {
+        totalHours = 0;
+        sessions = [];
+        saveToLocal();
+        updateDisplay();
+    }
 }
 
 function updateDisplay() {
-    // 1. Total hours update
-    document.getElementById("totalHours").innerHTML = totalHours;
-    
-    // 2. Session list update
-    updateSessionList();
-    
-    // 3. Streak show
+    document.getElementById("totalHours").innerHTML = totalHours.toFixed(1);
     document.getElementById("streak").innerHTML = streak;
-    
-    // 4. Last updated time
-    document.getElementById("lastUpdated").innerHTML = 
-        "Last updated: " + new Date().toLocaleTimeString();
+    document.getElementById("lastUpdated").innerHTML = "Last updated: " + new Date().toLocaleTimeString();
+    updateSessionList();
 }
-
-
-
 
 function toggleHistory() {
     historyVisible = !historyVisible;
@@ -84,7 +77,7 @@ function toggleHistory() {
     if(historyVisible) {
         panel.classList.add("show");
         updateHistoryTable();
-        noHistoryMsg.style.display = history.length === 0 ? "block" : "none";
+        if(noHistoryMsg) noHistoryMsg.style.display = history.length === 0 ? "block" : "none";
     } else {
         panel.classList.remove("show");
     }
@@ -104,19 +97,34 @@ function updateHistoryTable() {
         tableBody.appendChild(row);
     });
 }
+
 function markComplete() {
     if(totalHours > 0) {
         streak++;
-        
-        // Save today to history
-        let today = new Date().toISOString().split('T')[0];
+        let today = new Date().toLocaleDateString();
         let subjects = sessions.map(s => s.subject);
         
         history.push({
             date: today,
             total: totalHours,
-            subjects: subjects});
-            updateDisplay()
-        }
+            subjects: subjects
+        });
+
+        // Reset for next day
+        totalHours = 0;
+        sessions = [];
         
+        saveToLocal();
+        updateDisplay();
+        alert("Well done! Day marked as complete. 🔥");
+    } else {
+        alert("Add some study hours first!");
     }
+}
+
+// 3. Helper function data save karne ke liye
+function saveToLocal() {
+    localStorage.setItem("sessions", JSON.stringify(sessions));
+    localStorage.setItem("history", JSON.stringify(history));
+    localStorage.setItem("streak", streak.toString());
+}
