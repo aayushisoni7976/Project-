@@ -456,3 +456,15 @@ footer i.fa-heart {
         font-size: 1.5rem;
     }
 }
+/* Dropdown (select) ka font bada karne ke liye */
+select {
+    font-size: 1.1rem; /* Isse text thoda bada aur readable ho jayega */
+    padding: 8px;      /* Taaki box ke andar thodi jagah rahe */
+    border-radius: 8px;
+}
+
+/* Dropdown ke andar ke options ke liye */
+select option {
+    font-size: 1rem;
+    padding: 10px;
+}
