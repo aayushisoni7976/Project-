@@ -15,10 +15,11 @@ function addSession() {
     let hoursInput = document.getElementById("hours").value;
     let hours = parseFloat(hoursInput);
     
-    if (!hours || hours <= 0) {
-        alert("Please enter valid hours!");
-        return;
-    }
+if (!hours || hours <= 0 || hours > 24) {
+    alert("Security Alert: Invalid Study Time! Please enter a value between 0.1 and 24 hours.");
+    console.warn("Blocked an invalid input attempt."); // Yeh aapka mini-audit log hai
+    return;
+}
     
     totalHours = totalHours + hours;
     
@@ -128,3 +129,4 @@ function saveToLocal() {
     localStorage.setItem("history", JSON.stringify(history));
     localStorage.setItem("streak", streak.toString());
 }
+
