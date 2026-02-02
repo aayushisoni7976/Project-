@@ -413,4 +413,46 @@ footer i.fa-heart {
 
 .history-panel::-webkit-scrollbar-thumb:hover {
     background: #e67e00;
+
+}
+@media (max-width: 600px) {
+    
+   
+    .container {
+        padding: 10px;
+        width: 95%;
+    }
+
+   
+    .dashboard {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+   
+    .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+
+    #subject, #hours, .add-btn {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    
+    .history-panel {
+        overflow-x: auto;
+    }
+
+    .history-table {
+        min-width: 400px; 
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
 }
