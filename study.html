@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Tracker</title>
+    <link rel="stylesheet" href="study.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-book-open"></i> My Study Tracker</h1>
+            <p class="subtitle">Track your learning journey daily</p>
+        </header>
+
+        <div class="dashboard">
+            <div class="card total-time">
+                <h3><i class="fas fa-clock"></i> Today's Total</h3>
+                <div class="big-number" id="totalHours">0</div>
+                <p>hours studied</p>
+            </div>
+
+            <div class="card goal">
+                <h3><i class="fas fa-bullseye"></i> Daily Goal</h3>
+                <div class="big-number">7</div>
+                <p>hours target</p>
+            </div>
+
+            <div class="card streak">
+                <h3><i class="fas fa-fire"></i> Current Streak</h3>
+                <div class="big-number" id="streak">0</div>
+                <p>days in a row</p>
+            </div>
+        </div>
+
+        <div class="subject-section">
+            <h2><i class="fas fa-graduation-cap"></i> Add Study Session</h2>
+
+            <div class="input-group">
+                <select id="subject">
+                    <option value="JavaScript">JavaScript</option>
+                    <option value="Python">Python</option>
+                    <option value="C Programming">C Programming</option>
+                    <option value="HTML/CSS">HTML/CSS</option>
+                    <option value="Cybersecurity">Cybersecurity</option>
+                    <option value="DSA">Data Structures</option>
+                </select>
+
+                <div class="time-input">
+                    <input type="number" id="hours" min="0.5" max="10" step="0.5" placeholder="Hours">
+                    <span>hours</span>
+                </div>
+
+                <button onclick="addSession()" class="btn add-btn">
+                    <i class="fas fa-plus"></i> Add Session
+                </button>
+            </div>
+        </div>
+
+        <div class="sessions">
+            <h2><i class="fas fa-list-alt"></i> Today's Sessions</h2>
+            <div class="session-list" id="sessionList">
+                <p class="empty-message">No study sessions added yet. Start studying!</p>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button onclick="resetDay()" class="btn reset-btn">
+                <i class="fas fa-redo"></i> Reset Day
+            </button>
+            <button onclick="markComplete()" class="btn complete-btn">
+                <i class="fas fa-check-circle"></i> Mark Day Complete
+            </button>
+        </div>
+
+        <footer>
+            <p>Made with <i class="fas fa-heart"></i> for productive studying</p>
+            <p id="lastUpdated">Last updated: Just now</p>
+        </footer>
+        <!-- Add this BEFORE the closing </div> of .container -->
+
+        
+        <div class="history-section">
+            <h2><i class="fas fa-history"></i> Study History</h2>
+            <button onclick="toggleHistory()" class="btn history-btn">
+                <i class="fas fa-eye"></i> Show/Hide History
+            </button>
+
+            <div id="historyPanel" class="history-panel">
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>📅 Date</th>
+                            <th>⏱️ Hours</th>
+                            <th>📚 Subjects</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTable">
+                        <!-- History rows will appear here -->
+                    </tbody>
+                </table>
+                <p class="no-history" id="noHistory">No history yet. Complete your first study day!</p>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="study.js"></script>
+</body>
+
+</html>
