@@ -456,15 +456,28 @@ footer i.fa-heart {
         font-size: 1.5rem;
     }
 }
-/* Dropdown (select) ka font bada karne ke liye */
 select {
-    font-size: 1.1rem; /* Isse text thoda bada aur readable ho jayega */
-    padding: 8px;      /* Taaki box ke andar thodi jagah rahe */
+    font-size: 1.1rem; 
+    padding: 8px;      
     border-radius: 8px;
 }
 
-/* Dropdown ke andar ke options ke liye */
+
 select option {
     font-size: 1rem;
     padding: 10px;
+}
+
+@media (max-width: 600px) {
+    .controls {
+        flex-direction: column !important; 
+        gap: 15px !important;
+        align-items: center !important;
+    }
+
+    .reset-btn, .complete-btn {
+        width: 100% !important;
+        max-width: 280px; 
+        margin: 0 auto;
+    }
 }
